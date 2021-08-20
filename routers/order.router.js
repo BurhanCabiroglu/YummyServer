@@ -13,13 +13,16 @@ router.post("/",async (req,res)=>{
     const fullUrlRestaurant = req.protocol + '://' + req.get('host')+"/restaurant/"+restaurant_id;
     const fullUrlAccount = req.protocol + '://' + req.get('host')+"/account/"+account_id;
     const fullUrlFood = req.protocol + '://' + req.get('host')+"/food/"+food_id;
+    console.log(fullUrlRestaurant);
+    console.log(fullUrlAccount);
+    console.log(fullUrlFood)
     var restaurantRes = await axios.get(fullUrlRestaurant)
     var foodRes = await axios.get(fullUrlFood)
-    var accountRes = await axios.get(fullUrlAccount)
+    //var accountRes = await axios.get(fullUrlAccount)
 
     if(restaurantRes.status!=200) return res.status(401).json({error:"restaurant can not find"})
     if(foodRes.status!=200) return res.status(401).json({error:"food can not find"})
-    if(accountRes.status!=200) return res.status(401).json({error:"account can not find"})
+   // if(accountRes.status!=200) return res.status(401).json({error:"account can not find"})
     const today = new Date(Date.now())
     const foodOrder = new FoodOrder({
         "id":!id?mongodb.ObjectId():id,
