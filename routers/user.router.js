@@ -23,7 +23,7 @@ function authenticateToken(req, res, next) {
   }
 
 
-router.get("/login",async (req,res)=>{
+router.post("/login",async (req,res)=>{
     if(req.user){
         return res.json(user)
     }
