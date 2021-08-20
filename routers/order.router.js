@@ -10,9 +10,9 @@ router.post("/",async (req,res)=>{
     let restaurant_id = req.body.restaurant_id;
     let food_id = req.body.food_id
 
-    const fullUrlRestaurant = req.protocol + 's://' + req.get('host')+"/restaurant/"+restaurant_id;
-    const fullUrlAccount = req.protocol + 's://' + req.get('host')+"/account/"+account_id;
-    const fullUrlFood = req.protocol + 's://' + req.get('host')+"/food/"+food_id;
+    const fullUrlRestaurant = req.protocol + '://' + req.get('host')+"/restaurant/"+restaurant_id;
+    const fullUrlAccount = req.protocol + '://' + req.get('host')+"/account/"+account_id;
+    const fullUrlFood = req.protocol + '://' + req.get('host')+"/food/"+food_id;
     console.log(fullUrlRestaurant);
     console.log(fullUrlAccount);
     console.log(fullUrlFood)
