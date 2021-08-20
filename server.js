@@ -17,6 +17,13 @@ app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 app.use(express.static('public'))
 
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", req.get('host')); 
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.use("/restaurant",restaurantRouter)
 app.use("/account",userRouter)
 app.use("/food",foodRouter)
