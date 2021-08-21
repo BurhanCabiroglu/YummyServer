@@ -7,7 +7,7 @@ const fs = require('fs')
 const router = express.Router()
 const jwt = require("jsonwebtoken")
 
-
+const axios = require("axios")
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
@@ -34,6 +34,12 @@ router.post("/login",async (req,res)=>{
     const user = {email:email,password:password}
     const token = jwt.sign(user,process.env.ACCESS_TOKEN_SECRET)
     const account = await User.login(email)
+    
+    const fullUrl = req.protocol + '://' + req.get('host')+"/order?account_id="+account._id;
+    var rest = await axios.get(fullUrl)
+    account.orders = rest.data
+
+
     if(account){
         if(account.password != password){
             return res.status(400).json({"error":"wrong password"}) 
@@ -45,10 +51,13 @@ router.post("/login",async (req,res)=>{
     }
 })
 
-router.get("/profile",authenticateToken,async (req,res)=>{
+router.get("/profile",authenticateToken, async (req,res)=>{
     const email = req.user.email
     const password = req.user.password
     const account = await User.login(email)
+    const fullUrl = req.protocol + '://' + req.get('host')+"/order?account_id="+account._id;
+    var rest = await axios.get(fullUrl)
+    account.orders = rest.data
     if(account){
         if(account.password != password){
             return res.status(400).json({"error":"wrong password"}) 
