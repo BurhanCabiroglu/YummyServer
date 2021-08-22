@@ -9,6 +9,7 @@ router.post("/",async (req,res)=>{
     let account_id = req.body.account_id;
     let restaurant_id = req.body.restaurant_id;
     let food_id = req.body.food_id
+    let restaurant_point = req.body.restaurant_point
 
     /* const fullUrlRestaurant = req.protocol + '://' + req.get('host')+"/restaurant/"+restaurant_id;
     const fullUrlAccount = req.protocol + '://' + req.get('host')+"/account/"+account_id;
@@ -29,6 +30,7 @@ router.post("/",async (req,res)=>{
         "account_id":account_id,
         "restaurant_id":restaurant_id,
         "food_id":food_id,
+        "restaurant_point": restaurant_point,
         "order_date": today.getDate()+"-"+(today.getMonth()+1)+"-"+today.getFullYear()
     })
     foodOrder.save().then((resp)=>{        

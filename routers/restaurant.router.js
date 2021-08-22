@@ -1,4 +1,4 @@
-const { default: axios } = require("axios")
+const axios = require("axios")
 const express = require("express")
 const router = express.Router()
 const mongodb = require("mongodb")
@@ -67,6 +67,10 @@ router.get("/all",async (req,res)=>{
 
 router.get("/:id",async (req,res)=>{
     let rest_json = await Restaurant.findOne(req.params.id)
+    console.log(rest_json)
+    const fullUrl = req.protocol + '://' + req.get('host')+"/food?restaurant_id="+rest_json._id;
+    let menuRest = await axios.get(fullUrl)
+    rest_json.menu = menuRest.data
     if(rest_json){
         res.status(200).json(rest_json)
     }
@@ -97,6 +101,8 @@ router.delete("/:id",async (req,res)=>{
 
 router.get("/",async (req,res)=>{
     let province = req.query.province
+
+    
     Restaurant.getRestaurantsByProvince(province).toArray((err,result)=>{
         if(err) return res.status(404).json({"error":"restaurant can not get"})  
         return res.status(200).json(result)
